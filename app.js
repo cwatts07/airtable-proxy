@@ -2,7 +2,7 @@ const app = require('express')();
 const proxy = require('express-http-proxy');
 const paths = require('./paths.json');
 
-
+const PORT = process.env.PORT || 3000;
  function addAuth(proxyReqOpts) {
 	proxyReqOpts.headers['Authorization'] = 'Bearer ' + process.env.API_KEY;
 	proxyReqOpts.headers['Content-Type'] = 'application/json';
@@ -29,5 +29,5 @@ if(!process.env.AIR_TABLE_URL || !process.env.API_KEY || !process.env.APP_ID){
 			}))
 		}
 	}
-	app.listen(80, ()=>console.log("Running proxy app"));
+	app.listen(PORT, ()=>console.log("Running proxy app"));
 }
