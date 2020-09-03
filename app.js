@@ -29,5 +29,5 @@ if(!process.env.AIR_TABLE_URL || !process.env.API_KEY || !process.env.APP_ID){
 			}))
 		}
 	}
-	app.listen(80);
+	app.listen(80, ()=>console.log("Running proxy app"));
 }
