@@ -11,8 +11,10 @@ const PORT = process.env.PORT || 3000;
 
 function pathFixer(expressEndpoint, airtableEndpoint){
  	return function(req){
-	  let [path, queryString] = req.url.split('?');
-	  return `/v0/${process.env.APP_ID}/${airtableEndpoint}` + path.replace(expressEndpoint,'') + (queryString ? '?' + queryString : '');
+	  const queryString = req.url.split('?')[1];
+ 		const id = req.params.id ? '/' + req.params.id : ''
+	  const query = (queryString ? '?' + queryString : '')
+	  return `/v0/${process.env.APP_ID}/${airtableEndpoint}${id}${query}`;
   }
 }
 
@@ -22,7 +24,7 @@ if(!process.env.AIR_TABLE_URL || !process.env.API_KEY || !process.env.APP_ID){
 }else{
 	for(path in paths ){
 		if(paths.hasOwnProperty(path)){
-			app.use(path,proxy(process.env.AIR_TABLE_URL, {
+			app.use(path + '/:id?',proxy(process.env.AIR_TABLE_URL, {
 				https: true,
 				proxyReqPathResolver: pathFixer(path, paths[path]),
 				proxyReqOptDecorator: addAuth

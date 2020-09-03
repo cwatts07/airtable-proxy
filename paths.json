@@ -1,5 +1,5 @@
 {
-  "/master-list/*": "Master%20List",
-  "/projects/*": "Projects",
-  "/feedback/*": "Feedback"
+  "/master-list": "Master%20List",
+  "/projects": "Projects",
+  "/feedback": "Feedback"
 }
